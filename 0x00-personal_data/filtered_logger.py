@@ -18,8 +18,8 @@ def filter_datum(fields: List[str],
     a log message obfuscated
     """
     for field in fields:
-        message = re.sub(fr'{field}=[a-zA-Z0-9\W^{separator}]*{separator}',
-                         f'{field}={redaction}{separator}', message)
+        message = re.sub(fr'{field}=[^{separator}]*',
+                         f'{field}={redaction}', message)
     return message
 
 
@@ -31,15 +31,17 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, field: List[str]) -> None:
+    def __init__(self, fields: List[str]) -> None:
         """ Initialize instance """
         super(RedactingFormatter, self).__init__(self.FORMAT)
-        self.field = field
+        self.fields = list(fields)
 
     def format(self, record: logging.LogRecord) -> str:
         """
         This method filter values in incoming
         log records using `filter_datum`
         """
-        return filter_datum(self.field, '***',
-                            record.getMessage(), ';')
+        msg = super(RedactingFormatter, self).format(record)
+        filtered = filter_datum(self.fields, self.REDACTION,
+                                msg, self.SEPARATOR)
+        return filtered
