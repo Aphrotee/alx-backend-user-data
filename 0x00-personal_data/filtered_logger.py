@@ -85,7 +85,7 @@ def main() -> None:
     """
     db = get_db()
     cursor = db.cursor()
-    query = """SELECT name, email, phone, ssn, passwrod,
+    query = """SELECT name, email, phone, ssn, password,
               ip, last_login, user_agent FROM users"""
     cursor.execute(query)
     response = cursor.fetchall()
@@ -93,7 +93,12 @@ def main() -> None:
                'ip', 'last_login', 'user_agent')
     logger = get_logger()
     for row in response:
-        msg = ['{}={};'.format(columns(i), row(i)) for i in range(len(row))]
+        msg = ['{}={};'.format(columns[i], row[i]) for i in range(len(row))]
         msg = ''.join(msg)
         logger.info(msg)
+        print(msg)
     db.close()
+
+
+if __name__ == '__main__':
+    main()
