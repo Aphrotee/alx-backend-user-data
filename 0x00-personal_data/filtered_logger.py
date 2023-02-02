@@ -11,11 +11,11 @@ import re
 from typing import List
 
 PII_FIELDS = (
+    'name',
     'email',
     'phone',
     'ssn',
-    'password',
-    'ip'
+    'password'
 )
 
 
@@ -75,3 +75,25 @@ def get_db() -> MySQLConnection:
                           user=os.getenv('PERSONAL_DATA_DB_USERNAME'),
                           password=os.getenv('PERSONAL_DATA_DB_PASSWORD'))
     return con
+
+
+def main() -> None:
+    """
+    This function will obtain a database connection
+    using get_db and retrieve all rows in the users
+    table and display each row under a filtered format
+    """
+    db = get_db()
+    cursor = db.cursor()
+    query = """SELECT name, email, phone, ssn, passwrod,
+              ip, last_login, user_agent FROM users"""
+    cursor.execute(query)
+    response = cursor.fetchall()
+    columns = ('name', 'email', 'phone', 'ssn', 'password',
+               'ip', 'last_login', 'user_agent')
+    logger = get_logger()
+    for row in response:
+        msg = ['{}={};'.format(columns(i), row(i)) for i in range(len(row))]
+        msg = ''.join(msg)
+        logger.info(msg)
+    db.close()
