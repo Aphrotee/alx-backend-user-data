@@ -5,6 +5,8 @@ This module provides the `filter_datum` function
 """
 
 import logging
+import os
+from mysql.connector.connection import MySQLConnection
 import re
 from typing import List
 
@@ -64,3 +66,11 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+
+
+def get_db() -> MySQLConnection:
+    """ Returns a connection to a secure database """
+    con = MySQLConnection(host=os.getenv('PERSONAL_DATA_DB_HOST'),
+                          database=os.getenv('PERSONAL_DATA_DB_NAME'),
+                          user=os.getenv('PERSONAL_DATA_DB_USER'),
+                          password=os.getenv('PERSONAL_DATA_DB_PASSWORD'))
