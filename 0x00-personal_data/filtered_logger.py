@@ -95,8 +95,8 @@ def main() -> None:
     for row in response:
         msg = ['{}={};'.format(columns[i], row[i]) for i in range(len(row))]
         msg = ''.join(msg)
-        logger.info(msg)
-        print(msg)
+        lg = logging.LogRecord("user_data", logging.INFO, None, None, msg, None, None)
+        logger.handle(lg)
     db.close()
 
 
