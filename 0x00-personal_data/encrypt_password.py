@@ -7,7 +7,7 @@ This module provides the function `hash_password`
 import bcrypt
 
 
-def hash_password(password: str) -> str:
+def hash_password(password: str) -> bytes:
     """
     This function takes in a string argument
     and returns a salted, hashed password
