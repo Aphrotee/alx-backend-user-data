@@ -34,8 +34,7 @@ def filter_datum(fields: List[str],
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """ Redacting Formatter class """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -94,7 +93,8 @@ def main() -> None:
     for row in response:
         msg = ['{}={};'.format(columns[i], row[i]) for i in range(len(row))]
         msg = ''.join(msg)
-        lg = logging.LogRecord("user_data", logging.INFO, None, None, msg, None, None)
+        lg = logging.LogRecord("user_data", logging.INFO, None,
+                               None, msg, None, None)
         logger.handle(lg)
     db.close()
 
