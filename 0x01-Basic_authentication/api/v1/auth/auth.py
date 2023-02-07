@@ -5,6 +5,7 @@ This module provides the class Auth
 """
 
 from flask import request
+import re
 from typing import (
         List,
         TypeVar
@@ -21,10 +22,14 @@ class Auth:
         """
         if path is None or excluded_paths is None:
             return True
-        if path[len(path) - 1] != '/':
+        if path[len(path) - 1] != '/' and path[len(path) - 1] != '*':
             path += '/'
-        if path in excluded_paths:
-            return False
+        for excluded_path in excluded_paths:
+            if path[len(path) - 1] == '*':
+                if bool(re.match(fr'^{excluded_path}\w*', path)):
+                    return False
+            if path in excluded_paths:
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:

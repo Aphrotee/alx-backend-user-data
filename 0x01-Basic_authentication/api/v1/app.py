@@ -21,7 +21,7 @@ if auth is not None:
     else:
         from api.v1.auth.auth import Auth
         auth = Auth()
-requests = ['/api/v1/status/', '/api/v1/unauthorized/', '/api/v1/forbidden/']
+requests = ['/api/v1/stat*', '/api/v1/unauthorized/', '/api/v1/forbidden/']
 
 
 @app.before_request
