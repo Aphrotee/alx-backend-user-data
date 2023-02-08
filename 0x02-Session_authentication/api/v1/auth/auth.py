@@ -5,6 +5,7 @@ This module provides the class Auth
 """
 
 from flask import request
+from os import getenv
 import re
 from typing import (
         List,
@@ -43,3 +44,9 @@ class Auth:
     def current_user(self, request=None) -> TypeVar('User'):
         """ Gets and returns the current user object"""
         return None
+
+    def session_cookie(self, request=None):
+        if request is None:
+            return None
+        self._my_session_id = getenv('SESSION_NAME')
+        return request.cookies.get(self._my_session_id)
