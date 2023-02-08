@@ -91,6 +91,7 @@ class BasicAuth(Auth):
         return
 
     def current_user(self, request=None) -> TypeVar('User'):
+        """ Returns the current user object """
         if request is None:
             return
         b64_auth = self.authorization_header(request)
