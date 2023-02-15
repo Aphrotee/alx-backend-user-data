@@ -97,7 +97,7 @@ def reset_password_token(email: str) -> str:
     return json_res['reset_token']
 
 
-def update_password(email: str, reset_token: str, password: str):
+def update_password(email: str, reset_token: str, password: str) -> None:
     """
     Test for updating user password
     """

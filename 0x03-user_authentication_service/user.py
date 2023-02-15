@@ -22,7 +22,7 @@ class User(Base):
     reset_token = Column(String(250), nullable=True)
     count = 0
 
-    def __init__(self):
+    def __init__(self) -> None:
         """ Initialize instance """
         User.count += 1
         self.id = User.count
