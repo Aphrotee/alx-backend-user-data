@@ -11,16 +11,16 @@ app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/')
-def index():
+@app.route('/', methods=['GET'], strict_slashes=False)
+def index() -> str:
     """
     Root endpoint
     """
     return jsonify({'message': 'Bienvenue'})
 
 
-@app.route('/users', methods=['POST'])
-def users():
+@app.route('/users', methods=['POST'], strict_slashes=False)
+def users()-> str:
     """
     Creates new user and saves to the database
     """
@@ -35,8 +35,8 @@ def users():
         return jsonify({'message': 'email already registered'}), 400
 
 
-@app.route('/sessions', methods=['POST'])
-def login():
+@app.route('/sessions', methods=['POST'], strict_slashes=False)
+def login() -> str:
     """
     Creates a login session for the defined user
     """
@@ -53,8 +53,8 @@ def login():
     return response
 
 
-@app.route('/sessions', methods=['DELETE'])
-def logout():
+@app.route('/sessions', methods=['DELETE'], strict_slashes=False)
+def logout() -> str:
     """
     DEstroys a login session for the user defined by session_id
     """
@@ -69,8 +69,8 @@ def logout():
     return redirect('/')
 
 
-@app.route('/profile')
-def profile():
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> str:
     """
     Returns profile of user defined by session_id
     """
@@ -83,8 +83,8 @@ def profile():
     return jsonify({'email': user.email})
 
 
-@app.route('/reset_password', methods=['POST'])
-def get_reset_password_token():
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token() -> str:
     """
     Returns a uniqe token for reseting password
     """
@@ -98,8 +98,8 @@ def get_reset_password_token():
         abort(403)
 
 
-@app.route('/reset_password', methods=['PUT'])
-def update_password():
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password() -> str:
     """
     Changes user password
     """
