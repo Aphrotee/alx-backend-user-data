@@ -20,7 +20,7 @@ def index() -> str:
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def users()-> str:
+def users() -> str:
     """
     Creates new user and saves to the database
     """
@@ -66,7 +66,7 @@ def logout() -> str:
         AUTH.destroy_session(user.id)
     except Exception:
         abort(403)
-    return redirect('/')
+    return redirect('/'), 302
 
 
 @app.route('/profile', methods=['GET'], strict_slashes=False)
